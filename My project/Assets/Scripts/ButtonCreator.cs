@@ -1,28 +1,34 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ButtonCreator : MonoBehaviour
 {
     public GameObject buttonPrefab;
     public Transform parentPanel;
-    private List DialogueOptions;
+    public DialogueLoader loader;
+    private int plusParagon=0;
+    private int plusRenegade=0;
 
     void Start()
     {
-        
-        
-        CreateButton("Button 1", OnButton1Clicked);
-        CreateButton("Button 2", OnButton2Clicked);
-        CreateButton("Button 3", OnButton3Clicked);
+        DialogueNode node = loader.GetFirstNode();
+        foreach(var choice in node.choices)
+        {
+            plusParagon=choice.plus_paragon;
+            plusRenegade=choice.plus_renegade;
+            
+            CreateButton(choice.text, plusParagon, plusRenegade);
+        }
     }
 
-    void CreateButton(string buttonText, UnityEngine.Events.UnityAction action)
+    void CreateButton(string buttonText, int plusPar, int plusRen)
     {
         // Instantiate button
         GameObject newButton = Instantiate(buttonPrefab, parentPanel);
 
         // Set button text
-        Text textComponent = newButton.GetComponentInChildren<Text>();
+        TextMeshProUGUI textComponent = newButton.GetComponentInChildren<TextMeshProUGUI>();
         if (textComponent != null)
         {
             textComponent.text = buttonText;
@@ -30,22 +36,13 @@ public class ButtonCreator : MonoBehaviour
 
         // Add click listener
         Button btn = newButton.GetComponent<Button>();
-        btn.onClick.AddListener(action);
+        btn.onClick.AddListener(() =>OnButtonClicked(plusPar, plusRen));
     }
 
     // Functions for buttons
-    void OnButton1Clicked()
+    void OnButtonClicked(int plusPar, int plusRen)
     {
-        Debug.Log("Button 1 clicked!");
+        Debug.Log(plusPar.ToString());
     }
 
-    void OnButton2Clicked()
-    {
-        Debug.Log("Button 2 clicked!");
-    }
-
-    void OnButton3Clicked()
-    {
-        Debug.Log("Button 3 clicked!");
-    }
 }
