@@ -10,6 +10,7 @@ public class CharacterDatabase : ScriptableObject
     {
         public string name;
         public Sprite portrait;
+        public Sprite background;
     }
 
     public List<CharacterEntry> characters;
@@ -18,5 +19,11 @@ public class CharacterDatabase : ScriptableObject
     {
         var entry = characters.FirstOrDefault(c => c.name.Equals(characterName, System.StringComparison.OrdinalIgnoreCase));
         return entry.portrait;
+    }
+
+    public Sprite GetBackground(string characterName)
+    {
+        var entry = characters.FirstOrDefault(c => c.name.Equals(characterName, System.StringComparison.OrdinalIgnoreCase));
+        return entry.background;
     }
 }

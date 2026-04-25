@@ -60,16 +60,14 @@
       "speaker": "Presenter",
       "text_original": "Tell us a few words about yourself!",
       "wordle_solution": null,
-      "next_node": "7759d8fc-3967-4c18-8132-1c784174e29a",
-      "choices": []
-    },
-    {
-      "node_id": "7759d8fc-3967-4c18-8132-1c784174e29a",
-      "speaker": "Human; 0; 0",
-      "text_original": "What is happening?!",
-      "wordle_solution": null,
       "next_node": "c7357523-2cde-4f18-84ec-accf03a53e60",
-      "choices": []
+      "choices": [
+        {
+          "text": "What is happening?!",
+          "plus_paragon": 0,
+          "plus_renegade": 0        
+        }
+      ]
     },
     {
       "node_id": "c7357523-2cde-4f18-84ec-accf03a53e60",
@@ -97,7 +95,7 @@
     },
     {
       "node_id": "f2161ca3-2aa8-4bba-9e3b-a5bc572accb1",
-      "speaker": "Decln'Argeg",
+      "speaker": "Decln'Argegh",
       "text_original": "Well, in my free time I like to shoot stuff and\u2026 Water my plants.",
       "wordle_solution": "plants",
       "next_node": "68649621-523f-4f97-971d-edc4faaa3a44",

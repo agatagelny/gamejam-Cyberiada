@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class DialogueManager : MonoBehaviour
@@ -6,12 +7,12 @@ public class DialogueManager : MonoBehaviour
     public DialogueWriter dialogueWriter;
     public DialogueLoader loader;
     public ButtonCreator buttonCreator;
-    public AudioSource taliaAudio;
+    [SerializeField] private AudioManager _audioManager;    
 
     [Header("Character System (Sprite2D)")]
     public CharacterDatabase characterDB;
     public SpriteRenderer characterPortraitRenderer;
-
+    public SpriteRenderer backgroundImageRenderer;
     private string lastNodeId;
 
     private void OnEnable()
@@ -42,17 +43,22 @@ public class DialogueManager : MonoBehaviour
 
             // 2. Wypisujemy tekst (jeśli Prezenter, to forceUnderstandable = true)
             dialogueWriter.Write(nodeId, null, false, isPresenter);
-            taliaAudio.Play();
+            _audioManager.PlayVoice(node.speaker);
 
             // 3. Zarządzanie przyciskami po tekście
             if (isPresenter)
             {
-                // Jeśli mówi Prezenter, nie ma Wordle! Od razu pokazujemy wybory (Choices)
+                if (node.choices.Count == 0)
+                {
+                    buttonCreator.ShowContinue(() => {
+                        if (!string.IsNullOrEmpty(node.next_node)) Write(node.next_node);
+                    });
+                    return;
+                }
                 buttonCreator.ShowChoices(node, (choice) => HandleChoice(choice, node));
             }
             else
             {
-                // Jeśli mówi ktokolwiek inny, standardowe Flow z Wordle
                 buttonCreator.ShowContinue(() => StartWordleChallenge());
             }
         }
@@ -60,21 +66,26 @@ public class DialogueManager : MonoBehaviour
 
     private void UpdatePortrait(string speakerName)
     {
-        if (characterDB == null || characterPortraitRenderer == null) return;
+        if (characterDB == null || characterPortraitRenderer == null || backgroundImageRenderer == null) return;
+        ;
 
         Sprite speakerSprite = characterDB.GetSprite(speakerName);
+        Sprite backgroundSprite = characterDB.GetBackground(speakerName);
 
-        if (speakerSprite != null)
+        if (speakerSprite != null && backgroundSprite != null)
         {
-            characterPortraitRenderer.sprite = speakerSprite;
-            
+            characterPortraitRenderer.sprite = speakerSprite; 
             characterPortraitRenderer.gameObject.SetActive(true);
-            
             characterPortraitRenderer.color = Color.white;
+
+            backgroundImageRenderer.sprite = backgroundSprite;
+            backgroundImageRenderer.gameObject.SetActive(true);
+            backgroundImageRenderer.color = Color.white;
         }
         else
         {
             characterPortraitRenderer.gameObject.SetActive(false);
+            backgroundImageRenderer.gameObject.SetActive(false);
         }
     }
 
@@ -124,7 +135,8 @@ public class DialogueManager : MonoBehaviour
         {
             // Follow-up prezentera też musi być zrozumiały
             dialogueWriter.WriteRaw(choice.follow_up, currentNode.speaker, null, false, isPresenter);
-            
+            _audioManager.PlayVoice(currentNode.speaker);
+
             buttonCreator.ShowContinue(() => {
                 if (!string.IsNullOrEmpty(currentNode.next_node)) Write(currentNode.next_node);
             });

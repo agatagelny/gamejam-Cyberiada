@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterDatabase
   characters:
   - name: Decln'Argegh
-    portrait: {fileID: 0}
+    portrait: {fileID: -8951383523087240050, guid: cdb2a54be8390c94a9ae174c03ac3151, type: 3}
+    background: {fileID: -548361080881072038, guid: 2ef149a1808a49840b1ef1782333148b, type: 3}
   - name: CyberJohn
     portrait: {fileID: 8821616558950248791, guid: 00028d3452b5eb54582344f3798b4796, type: 3}
+    background: {fileID: 5924152097671645703, guid: 2292577ea114e25439f244663f8e6883, type: 3}
   - name: Juhei Ikeet
     portrait: {fileID: 6083806894379148034, guid: d7d579a5050fd0146a5faa432cc6a7c9, type: 3}
+    background: {fileID: -7377295934022830490, guid: c62ff207df337a34488e0c9474648b04, type: 3}
+  - name: Presenter
+    portrait: {fileID: -5251537206809758910, guid: 1e858eb0c06ead444be798edb9409fdf, type: 3}
+    background: {fileID: -7377295934022830490, guid: c62ff207df337a34488e0c9474648b04, type: 3}
