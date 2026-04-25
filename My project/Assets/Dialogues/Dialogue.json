@@ -1,0 +1,231 @@
+{
+  "settings": {
+    "game_title": "Alien Wordle Dating Sim",
+    "thresholds": {
+      "paragon_ending": 50,
+      "renegade_ending": 50
+    }
+  },
+  "nodes": [
+    {
+      "node_id": "28ec963c-3b86-4b90-9b42-c79f4572aea7",
+      "speaker": "Presenter",
+      "text_original": "Welcome to today\u2019s episode of Match Made in Heaven! Today we present you three different contestants out of this world!",
+      "wordle_solution": null,
+      "next_node": "5fe4ca3a-79c1-44f2-9d50-80f20cef2cbc",
+      "choices": []
+    },
+    {
+      "node_id": "5fe4ca3a-79c1-44f2-9d50-80f20cef2cbc",
+      "speaker": "Presenter",
+      "text_original": "The first one Decln\u2019Argegh comes from a distant planet where flying cars are relicts of the past 'cause you can just fly instead!",
+      "wordle_solution": null,
+      "next_node": "b1a8fa0d-4778-4933-9663-2fe279e1a81e",
+      "choices": []
+    },
+    {
+      "node_id": "b1a8fa0d-4778-4933-9663-2fe279e1a81e",
+      "speaker": "Presenter",
+      "text_original": "The second one,\u00a0 CyberJohn used to be the assistant to the CEO of the logistics corporation KOSMEX, who recently died. His goal is to start the best logistics company in the galaxy, and he needs a\u00a0new SLP - strategic life partner to make it happen.",
+      "wordle_solution": null,
+      "next_node": "f5925590-89f3-4dfb-83a2-daa9de3ad491",
+      "choices": []
+    },
+    {
+      "node_id": "f5925590-89f3-4dfb-83a2-daa9de3ad491",
+      "speaker": "Presenter",
+      "text_original": "Next is Juhei Ikeet. The brave knight of planet Vexlia is as lethal as they are pretty. They chase after love and enemies of Vaelia clan.",
+      "wordle_solution": null,
+      "next_node": "a73accf6-c239-458d-bc0e-214d752b229f",
+      "choices": []
+    },
+    {
+      "node_id": "a73accf6-c239-458d-bc0e-214d752b229f",
+      "speaker": "Presenter",
+      "text_original": "(This is a placeholder for hot baba)",
+      "wordle_solution": null,
+      "next_node": "812ed5be-8ecb-472f-8f6e-a84b9a28292e",
+      "choices": []
+    },
+    {
+      "node_id": "812ed5be-8ecb-472f-8f6e-a84b9a28292e",
+      "speaker": "Presenter",
+      "text_original": "Today, all four of them will fight for the heart of the Human, from Earth!",
+      "wordle_solution": null,
+      "next_node": "89b19e21-7d37-493e-95f8-114ef42ba6b3",
+      "choices": []
+    },
+    {
+      "node_id": "89b19e21-7d37-493e-95f8-114ef42ba6b3",
+      "speaker": "Presenter",
+      "text_original": "Tell us a few words about yourself!",
+      "wordle_solution": null,
+      "next_node": "7759d8fc-3967-4c18-8132-1c784174e29a",
+      "choices": []
+    },
+    {
+      "node_id": "7759d8fc-3967-4c18-8132-1c784174e29a",
+      "speaker": "Human; 0; 0",
+      "text_original": "What is happening?!",
+      "wordle_solution": null,
+      "next_node": "c7357523-2cde-4f18-84ec-accf03a53e60",
+      "choices": []
+    },
+    {
+      "node_id": "c7357523-2cde-4f18-84ec-accf03a53e60",
+      "speaker": "Presenter",
+      "text_original": "Haha! Amazing! Time to start a show!",
+      "wordle_solution": null,
+      "next_node": "7263d6df-2002-4ef0-bade-56f1d9e6b77d",
+      "choices": []
+    },
+    {
+      "node_id": "7263d6df-2002-4ef0-bade-56f1d9e6b77d",
+      "speaker": "Presenter",
+      "text_original": "Let\u2019s begin with something simple. Do you have any unusual hobbies our guest should know about?",
+      "wordle_solution": null,
+      "next_node": "1d6098fc-57b4-4208-ad11-6fbf03975ebe",
+      "choices": []
+    },
+    {
+      "node_id": "1d6098fc-57b4-4208-ad11-6fbf03975ebe",
+      "speaker": "Presenter",
+      "text_original": "Start with you, Declan'Argegh.",
+      "wordle_solution": null,
+      "next_node": "f2161ca3-2aa8-4bba-9e3b-a5bc572accb1",
+      "choices": []
+    },
+    {
+      "node_id": "f2161ca3-2aa8-4bba-9e3b-a5bc572accb1",
+      "speaker": "Decln'Argeg",
+      "text_original": "Well, in my free time I like to shoot stuff and\u2026 Water my plants.",
+      "wordle_solution": "plants",
+      "next_node": "68649621-523f-4f97-971d-edc4faaa3a44",
+      "choices": [
+        {
+          "text": "Watering plants? I love watering plants!",
+          "plus_paragon": 1,
+          "plus_renegade": 0,
+          "follow_up": "Finally a human who appreciates the delicate nature of plants! Plants! More like weeds! SHOOT YOUR SHOT, IDIOT!"
+        },
+        {
+          "text": "Okay, seems like a boring way to spend your free time.",
+          "plus_paragon": 1,
+          "plus_renegade": 0,
+          "follow_up": "Finally a human who appreciates the delicate nature of plants! Plants! More like weeds! SHOOT YOUR SHOT, IDIOT!"
+        },
+        {
+          "text": "I don\u2019t know\u2026 Shooting stuff seems like a red flag to me.",
+          "plus_paragon": 1,
+          "plus_renegade": 0,
+          "follow_up": "Finally a human who appreciates the delicate nature of plants! Plants! More like weeds! SHOOT YOUR SHOT, IDIOT!"
+        }
+      ]
+    },
+    {
+      "node_id": "68649621-523f-4f97-971d-edc4faaa3a44",
+      "speaker": "Presenter",
+      "text_original": "Haha! Fantastic! What about you Juhei?",
+      "wordle_solution": null,
+      "next_node": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "choices": []
+    },
+    {
+      "node_id": "68649621-523f-4f97-971d-edc4faaa3a44",
+      "speaker": "Presenter",
+      "text_original": "Haha! Fantastic! What about you Juhei?",
+      "wordle_solution": null,
+      "next_node": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "choices": []
+    },
+    {
+      "node_id": "68649621-523f-4f97-971d-edc4faaa3a44",
+      "speaker": "Presenter",
+      "text_original": "Haha! Fantastic! What about you Juhei?",
+      "wordle_solution": null,
+      "next_node": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "choices": []
+    },
+    {
+      "node_id": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "speaker": "Juhei Ikeet",
+      "text_original": "I don\u2019t do hobbies. But when I am not on duty, I like to master my dagger throwing.",
+      "wordle_solution": "dagger",
+      "next_node": "08c2a8d7-40ba-45cf-acf2-4d42d6d52dde",
+      "choices": [
+        {
+          "text": "Seems like you\u2019re a busy girl.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I respect people who put their job first in their life.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I also like sports, but I prefer jogging.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        }
+      ]
+    },
+    {
+      "node_id": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "speaker": "Juhei Ikeet",
+      "text_original": "I don\u2019t do hobbies. But when I am not on duty, I like to master my dagger throwing.",
+      "wordle_solution": "dagger",
+      "next_node": "08c2a8d7-40ba-45cf-acf2-4d42d6d52dde",
+      "choices": [
+        {
+          "text": "Seems like you\u2019re a busy girl.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I respect people who put their job first in their life.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I also like sports, but I prefer jogging.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        }
+      ]
+    },
+    {
+      "node_id": "941d9659-2a3b-42ca-88e2-f82d0fa90b4a",
+      "speaker": "Juhei Ikeet",
+      "text_original": "I don\u2019t do hobbies. But when I am not on duty, I like to master my dagger throwing.",
+      "wordle_solution": "dagger",
+      "next_node": "08c2a8d7-40ba-45cf-acf2-4d42d6d52dde",
+      "choices": [
+        {
+          "text": "Seems like you\u2019re a busy girl.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I respect people who put their job first in their life.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        },
+        {
+          "text": "I also like sports, but I prefer jogging.",
+          "plus_paragon": 0,
+          "plus_renegade": 1,
+          "follow_up": "Not a girl. On my planet, we don\u2019t believe in such archaic ideas like gender."
+        }
+      ]
+    }
+  ]
+}
