@@ -10,7 +10,7 @@
     {
       "node_id": "node_001",
       "speaker": "Xylax",
-      "text_original": "Greetings, human. Do you come with peace or greed?",
+      "text_original": "Greetings, human. Do you come with peace or greeed?",
       "wordle_solution": "PEACE",
       "next_node": "node_002",
       "choices": [
@@ -23,6 +23,11 @@
           "text": "I seek resources.",
           "plus_paragon": 0,
           "plus_renegade": 10
+        },
+        {
+          "text": "I seek war. I need terror. Your planet looks promising and I need to take some lives.",
+          "plus_paragon": 0,
+          "plus_renegade": 10000
         }
       ]
     },
@@ -41,4 +46,4 @@
       ]
     }
   ]
-}
+} 

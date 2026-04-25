@@ -1268,7 +1268,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7fdf9c82c874c49baa9bd7d4e945b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameInit
-  loader: {fileID: 2025339896}
+  loader: {fileID: 2025339898}
   testNodeID: node_001
 --- !u!4 &1684343938
 Transform:
@@ -1294,7 +1294,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025339897}
-  - component: {fileID: 2025339896}
+  - component: {fileID: 2025339898}
   m_Layer: 0
   m_Name: DialogueLoader
   m_TagString: Untagged
@@ -1302,19 +1302,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2025339896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2025339895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02e991707aefc242a7e3694b9f27f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DialogueLoader
-  jsonFile: {fileID: 4900000, guid: bcb03d39bd45eb344bc7c57a55e80946, type: 3}
 --- !u!4 &2025339897
 Transform:
   m_ObjectHideFlags: 0
@@ -1330,6 +1317,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2025339898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2025339895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f7cb9522150f84a94862927cb5abdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueLoader
+  jsonFile: {fileID: 4900000, guid: c62413df331dbac4eb0f48274f140049, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
