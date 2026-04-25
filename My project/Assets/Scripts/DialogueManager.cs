@@ -7,7 +7,11 @@ public class DialogueManager : MonoBehaviour
     public DialogueLoader loader;
     public ButtonCreator buttonCreator;
 
-    private string lastNodeId; // Zapamiętujemy, o czym rozmawiamy
+    [Header("Character System (Sprite2D)")]
+    public CharacterDatabase characterDB;
+    public SpriteRenderer characterPortraitRenderer;
+
+    private string lastNodeId;
 
     private void OnEnable()
     {
@@ -27,14 +31,37 @@ public class DialogueManager : MonoBehaviour
     {
         lastNodeId = nodeId;
         
-        // 1. Piszemy tekst (Typewriter)
-        dialogueWriter.Write(nodeId);
+        DialogueNode node = loader.GetNode(nodeId);
 
-        // 2. Pokazujemy przycisk Continue
-        buttonCreator.ShowContinue(() => {
-            // KROK 2: Po kliknięciu Continue odpalamy Wordle
-            StartWordleChallenge();
-        });
+        if (node != null)
+        {
+            UpdatePortrait(node.speaker);
+
+            dialogueWriter.Write(nodeId);
+            buttonCreator.ShowContinue(() => {
+                StartWordleChallenge();
+            });
+        }
+    }
+
+    private void UpdatePortrait(string speakerName)
+    {
+        if (characterDB == null || characterPortraitRenderer == null) return;
+
+        Sprite speakerSprite = characterDB.GetSprite(speakerName);
+
+        if (speakerSprite != null)
+        {
+            characterPortraitRenderer.sprite = speakerSprite;
+            
+            characterPortraitRenderer.gameObject.SetActive(true);
+            
+            characterPortraitRenderer.color = Color.white;
+        }
+        else
+        {
+            characterPortraitRenderer.gameObject.SetActive(false);
+        }
     }
 
     private void StartWordleChallenge()
@@ -49,25 +76,37 @@ public class DialogueManager : MonoBehaviour
     private void HandleWordleRequested(string solution)
     {
         dialogueWriter.Hide();
-        buttonCreator.ClearButtons(); // Chowamy przycisk na czas gry
+        buttonCreator.ClearButtons();
     }
 
-    // 2. Gdy Wordle się kończy (OnWordleSuccess)
     private void HandleWordleResult(string foundKeyword)
     {
         if (string.IsNullOrEmpty(lastNodeId)) return;
         DialogueNode node = loader.GetNode(lastNodeId);
 
-        // 1. Wypisujemy tekst ponownie (Natychmiast)
         if (!string.IsNullOrEmpty(foundKeyword))
             dialogueWriter.Write(lastNodeId, foundKeyword, true);
         else
             dialogueWriter.Write(lastNodeId, null, true);
 
-        // 2. KROK 4: Pokazujemy finalne przyciski wyborów
         buttonCreator.ShowChoices(node, (choice) => {
-            Debug.Log($"Wybrano: {choice.text}. Paragon: +{choice.plus_paragon}, Renegade: +{choice.plus_renegade}");
-            // Tutaj możesz wywołać kolejny Node: Write(choice.next_node_id);
+        GameEvents.TriggerStatsChanged(choice.plus_paragon, choice.plus_renegade);
+
+        dialogueWriter.WriteRaw(choice.follow_up, node.speaker);
+
+        buttonCreator.ShowContinue(() => {
+            if (!string.IsNullOrEmpty(node.next_node))
+            {
+                // Przejście do właściwego następnego węzła
+                Write(node.next_node);
+            }
+            else
+            {
+                // Koniec dialogu
+                dialogueWriter.Hide();
+                buttonCreator.ClearButtons();
+            }
         });
+    });
     }
 }

@@ -85,6 +85,16 @@ public class DialogueWriter : MonoBehaviour
         mainCoroutine = StartCoroutine(DialogueSequence(node.text_original, keyword, instant));
     }
 
+    public void WriteRaw(string text, string speaker, string keyword = null, bool forceSkip = false)
+    {
+        dialogueUI.SetActive(true);
+        if (mainCoroutine != null) StopCoroutine(mainCoroutine);
+        ClearGrid();
+        
+        bool skipTypewriter = !string.IsNullOrEmpty(keyword) || forceSkip;
+        mainCoroutine = StartCoroutine(DialogueSequence(text, keyword, skipTypewriter));
+    }
+
     private IEnumerator DialogueSequence(string text, string keyword, bool skipTypewriter)
     {
         // --- FAZA 1: ANIMACJA W JAZDU I FADE IN ---
