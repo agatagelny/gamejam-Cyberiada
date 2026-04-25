@@ -4,95 +4,176 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class DialogueWriter : MonoBehaviour
 {
-    [Header("Settings")]
+    [Header("References")]
     public DialogueLoader loader;
-    public GameObject textPrefab; 
-    public Transform parent;      // Musi mieć GridLayoutGroup (Constraint: Fixed Column Count = 20)
-    public TMP_FontAsset fontAsset;
-    public TMP_FontAsset alienFontAsset;
+    public GameObject textPrefab;
+    public Transform parent; 
+    public GameObject dialogueUI;
     public TextAsset wordFile;
 
-    [Header("Grid Settings")]
+    [Header("Fonts")]
+    public TMP_FontAsset fontAsset;
+    public TMP_FontAsset alienFontAsset;
+
+    [Header("Typing Settings")]
     public int charsPerLine = 24;
     public float typingSpeed = 0.05f;
+    public Color keywordHighlightColor = Color.cyan;
+
+    [Header("Animation Settings")]
+    public float animationDuration = 0.5f;
+    public float offScreenX = -10; 
+    public AnimationCurve slideCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private string[] dictionaryWords;
     private int currentColumn = 0;
+    private Coroutine mainCoroutine;
+    
+    private RectTransform panelRect;
+    private CanvasGroup canvasGroup;
+    private Vector2 targetAnchoredPosition;
 
-    void Start()
+    [Header("References")]
+    public RectTransform speechPanelRect;
+
+    void Awake()
     {
         PrepareDictionary();
-        DialogueNode node = loader.GetFirstNode();
-        if (node != null)
+
+        // 1. Sprawdzamy, czy w ogóle mamy obiekt UI
+        if (dialogueUI == null)
         {
-            StartCoroutine(TypeTextRoutine(node.text_original));
+            Debug.LogError("<color=red>DialogueWriter: Przypisz 'Dialogue UI' w Inspektorze!</color>");
+            return;
         }
+
+        if (canvasGroup == null) canvasGroup = dialogueUI.GetComponent<CanvasGroup>();
+        if (canvasGroup == null) canvasGroup = dialogueUI.GetComponentInChildren<CanvasGroup>();
+        
+        if (panelRect == null) panelRect = dialogueUI.GetComponent<RectTransform>();
+
+        if (canvasGroup == null || panelRect == null)
+        {
+            Debug.LogError($"<color=yellow>DialogueWriter: Brakuje komponentów na {dialogueUI.name}. Sprawdź CanvasGroup i RectTransform!</color>");
+            return;
+        }
+
+        targetAnchoredPosition = panelRect.anchoredPosition;
+        HideInstantly();
     }
 
-    private IEnumerator TypeTextRoutine(string fullText)
+    private void HideInstantly()
+    {
+        canvasGroup.alpha = 0;
+        panelRect.anchoredPosition = new Vector2(offScreenX, targetAnchoredPosition.y);
+        dialogueUI.SetActive(false);
+    }
+
+    public void Write(string nodeId, string keyword = null)
+    {
+        DialogueNode node = loader.GetNode(nodeId);
+        if (node == null) return;
+
+        // 1. Aktywujemy obiekt - od tej pory skrypt widzi UI
+        dialogueUI.SetActive(true);
+
+        // 2. Resetujemy stare procesy
+        if (mainCoroutine != null) StopCoroutine(mainCoroutine);
+        ClearGrid();
+
+        bool skipTypewriter = !string.IsNullOrEmpty(keyword);
+
+        // 3. Odpalamy jedną wspólną Coroutine dla animacji i pisania
+        mainCoroutine = StartCoroutine(DialogueSequence(node.text_original, keyword, skipTypewriter));
+    }
+
+    private IEnumerator DialogueSequence(string text, string keyword, bool skipTypewriter)
+    {
+        // --- FAZA 1: ANIMACJA W JAZDU I FADE IN ---
+        float elapsedTime = 0;
+        Vector2 startPos = new Vector2(offScreenX, targetAnchoredPosition.y);
+
+        while (elapsedTime < animationDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / animationDuration;
+            float curveT = slideCurve.Evaluate(t);
+
+            // Ruch
+            panelRect.anchoredPosition = Vector2.LerpUnclamped(startPos, targetAnchoredPosition, curveT);
+            // Fade In (przezroczystość)
+            canvasGroup.alpha = Mathf.Lerp(0, 1, t); // Alfa idzie liniowo 0 -> 1
+
+            yield return null;
+        }
+
+        panelRect.anchoredPosition = targetAnchoredPosition;
+        canvasGroup.alpha = 1;
+
+        // --- FAZA 2: PISANIE TEKSTU ---
+        yield return StartCoroutine(TypeTextRoutine(text, keyword, skipTypewriter));
+    }
+
+    private IEnumerator TypeTextRoutine(string fullText, string keyword, bool skipTypewriter)
     {
         string[] words = fullText.Split(' ');
+        currentColumn = 0;
 
         foreach (string word in words)
         {
-            string clean = CleanWord(word);
-            bool exists = dictionaryWords.Contains(clean.ToLower());
-            TMP_FontAsset fontToUse = exists ? fontAsset : alienFontAsset;
+            if (string.IsNullOrEmpty(word)) continue;
 
-            // 1. Logika zawijania
+            string clean = CleanWord(word);
+            string cleanLower = clean.ToLower();
+            bool isKeyword = (keyword != null && cleanLower == keyword.ToLower());
+            bool exists = dictionaryWords.Contains(cleanLower) || isKeyword;
+
+            TMP_FontAsset fontToUse = exists ? fontAsset : alienFontAsset;
+            Color textColor = isKeyword ? keywordHighlightColor : Color.white;
+
+            // Zawijanie
             if (word.Length > (charsPerLine - currentColumn))
             {
-                // Wypełniamy resztę linii TYLKO jeśli nie jesteśmy już na początku
                 if (currentColumn != 0)
                 {
                     int spacesToFill = charsPerLine - currentColumn;
-                    for (int i = 0; i < spacesToFill; i++)
-                    {
-                        CreateText(' ', fontAsset);
-                    }
+                    for (int i = 0; i < spacesToFill; i++) CreateText(' ', fontAsset, Color.white);
                     currentColumn = 0;
                 }
             }
 
-            // 2. Wypisywanie słowa
             for (int i = 0; i < word.Length; i++)
             {
-                CreateText(word[i], fontToUse);
+                CreateText(word[i], fontToUse, textColor);
                 currentColumn++;
-                
-                if (currentColumn >= charsPerLine) 
-                    currentColumn = 0;
-
-                yield return new WaitForSeconds(typingSpeed);
+                if (currentColumn >= charsPerLine) currentColumn = 0;
+                if (!skipTypewriter) yield return new WaitForSeconds(typingSpeed);
             }
 
-            // 3. POPRAWIONA LOGIKA SPACJI
-            // Dodaj spację tylko jeśli:
-            // - NIE jesteśmy na końcu linii (currentColumn == 0 po resecie)
-            // - NIE jesteśmy na samym początku nowej linii
             if (currentColumn > 0 && currentColumn < charsPerLine)
             {
-                CreateText(' ', fontAsset);
+                CreateText(' ', fontAsset, Color.white);
                 currentColumn++;
-                
-                // Jeśli spacja zajęła ostatnie miejsce w linii
-                if (currentColumn >= charsPerLine) 
-                    currentColumn = 0;
+                if (currentColumn >= charsPerLine) currentColumn = 0;
             }
 
-            yield return new WaitForSeconds(typingSpeed);
+            if (!skipTypewriter) yield return new WaitForSeconds(typingSpeed);
         }
     }
 
-    void CreateText(char letter, TMP_FontAsset font)
+    // Pomocnicze metody
+    void CreateText(char letter, TMP_FontAsset font, Color color)
     {
         GameObject obj = Instantiate(textPrefab, parent);
         TextMeshProUGUI textComp = obj.GetComponent<TextMeshProUGUI>();
         textComp.text = letter.ToString();
         textComp.font = font;
+        textComp.color = color;
     }
+
+    private void ClearGrid() { foreach (Transform child in parent) Destroy(child.gameObject); }
 
     private void PrepareDictionary()
     {
@@ -111,9 +192,13 @@ public class NewMonoBehaviourScript : MonoBehaviour
         char[] punctuations = { ',', '.', '?', '!' };
         string clean = word;
         if (clean.Length > 0 && punctuations.Contains(clean[clean.Length - 1]))
-        {
             clean = clean.Substring(0, clean.Length - 1);
-        }
         return clean;
+    }
+
+    public void Hide()
+    {
+        if (mainCoroutine != null) StopCoroutine(mainCoroutine);
+        HideInstantly(); // Wykorzystujemy Twoją bezpieczną metodę
     }
 }

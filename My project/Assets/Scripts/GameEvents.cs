@@ -17,7 +17,7 @@ public static class GameEvents
     public static Action<int, int> OnStatsChanged; // Paragon change, Renegade change
 
     // Wywoływane, gdy poziom zrozumienia (Understanding) rośnie
-    public static Action<int> OnUnderstandingUpdated; // Nowa wartość UP
+    public static Action<int> OnUnderstandingUpdated;
 
 
     // --- POMOCNICZE METODY DO WYWOŁYWANIA (Triggering) ---
