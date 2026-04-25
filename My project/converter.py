@@ -69,8 +69,7 @@ while True: # broken only explicitly
     msg_next    = ""
 
     # message manager skips choice msgs and followup msgs, rendering their `== 1` not needing of distinguishing
-    if len(elem["outputs"]) == 0: break # explicit end
-    elif len(elem["outputs"]) == 1:
+    if len(elem["outputs"]) == 1:
         msg_next = conns[elem["outputs"][0]]["targetid"] # immediate next message
     elif len(elem["outputs"]) > 1: # choice message type (-> indicates what msg it points towards)
         msg_next = conns[elem["outputs"][0]]["targetid"] # nested next message ID (-> choice)
