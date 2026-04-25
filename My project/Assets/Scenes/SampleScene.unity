@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DialogueManager
   dialogueWriter: {fileID: 1740200795}
   loader: {fileID: 2025339898}
+  buttonCreator: {fileID: 1841846421}
 --- !u!4 &258362608
 Transform:
   m_ObjectHideFlags: 0
@@ -353,6 +354,14 @@ PrefabInstance:
       propertyPath: speechPanelRect
       value: 
       objectReference: {fileID: 321373620}
+    - target: {fileID: 4228066098479765450, guid: 28bb49c5dffde344ea46f168336111e6, type: 3}
+      propertyPath: keywordHighlightColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228066098479765450, guid: 28bb49c5dffde344ea46f168336111e6, type: 3}
+      propertyPath: keywordHighlightColor.r
+      value: 0.620698
+      objectReference: {fileID: 0}
     - target: {fileID: 7843053451388210134, guid: 28bb49c5dffde344ea46f168336111e6, type: 3}
       propertyPath: m_Name
       value: Dialogues
@@ -889,7 +898,7 @@ MonoBehaviour:
   absentColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   emptyTileColor: {r: 1, g: 1, b: 1, a: 0.2}
   animationDuration: 0.5
-  startXPosition: -1000
+  startXPosition: -20
   endXPosition: 20
   slideCurve:
     serializedVersion: 2
@@ -1046,7 +1055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSceneManager
   characterTransform: {fileID: 721026723}
-  centerPosition: {x: -4.13, y: -4.7, z: 0}
+  centerPosition: {x: -4.13, y: -4.73, z: 0}
   centerScale: {x: 0.45, y: 0.45, z: 0.45}
   sidePosition: {x: -5, y: 0, z: 0}
   sideScale: {x: 0.21, y: 0.21, z: 0.21}
@@ -1381,6 +1390,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc3c5831746eb24d8f5813324b3ec95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
+--- !u!114 &1841846421 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 420872801486551511, guid: 28bb49c5dffde344ea46f168336111e6, type: 3}
+  m_PrefabInstance: {fileID: 506284276}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b3e4f7e381c394692b1d8f428f767e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonCreator
 --- !u!1 &2025339895
 GameObject:
   m_ObjectHideFlags: 0
