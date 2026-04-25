@@ -14,6 +14,7 @@ public class WordleManager : MonoBehaviour
     public GameObject tilePrefab;
     public Transform container;
     public GameObject backgroundImagePrefab;
+    public AudioSource wordleInputSound;
     
     [Header("Colors")]
     public Color correctColor = Color.green;
@@ -224,10 +225,12 @@ public class WordleManager : MonoBehaviour
     {
         if (currentAttempt >= rows.Count) return;
 
+
         var currentTiles = rows[currentAttempt];
         for (int i = 0; i < currentTiles.Length; i++)
         {
             currentTiles[i].SetLetter(i < currentInput.Length ? currentInput[i] : ' ');
+            wordleInputSound.Play();
         }
     }
 
