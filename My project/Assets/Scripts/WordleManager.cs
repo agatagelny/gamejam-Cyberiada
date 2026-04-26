@@ -120,6 +120,7 @@ public class WordleManager : MonoBehaviour
         if (char.IsLetter(character))
         {
             currentInput += char.ToUpper(character);
+            wordleInputSound.Play();
             UpdateUI();
         }
     }
@@ -229,7 +230,7 @@ public class WordleManager : MonoBehaviour
         for (int i = 0; i < currentTiles.Length; i++)
         {
             currentTiles[i].SetLetter(i < currentInput.Length ? currentInput[i] : ' ');
-            wordleInputSound.Play();
+            
         }
     }
 
