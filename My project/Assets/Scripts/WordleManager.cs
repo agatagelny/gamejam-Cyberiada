@@ -293,6 +293,10 @@ public class WordleManager : MonoBehaviour
         WordleTile[] currentTiles = rows[currentAttempt];
         char[] targetChars = targetWord.ToCharArray();
         char[] inputChars = currentInput.ToCharArray();
+        // Debug.Log("target: \n");
+        // foreach (char c in targetChars) Debug.Log(c);
+        // Debug.Log("attempt: \n");
+        // foreach (char c in inputChars) Debug.Log(c);
         bool[] matched = new bool[targetChars.Length];
 
         for (int i = 0; i < inputChars.Length; i++)
@@ -304,7 +308,6 @@ public class WordleManager : MonoBehaviour
             }
         }
 
-        // Pass 2: Żółte / Szare
         for (int i = 0; i < inputChars.Length; i++)
         {
             if (matched[i]) continue;
@@ -315,7 +318,6 @@ public class WordleManager : MonoBehaviour
                 if (!matched[j] && inputChars[i] == targetChars[j])
                 {
                     currentTiles[i].SetColor(presentColor);
-                    matched[j] = true;
                     foundYellow = true;
                     break;
                 }
